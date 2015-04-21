@@ -1,0 +1,11 @@
+what the grid needs to do
+
+
+- check if the chambers are within the level limits
+- check if the block in the grid is empty (null)
+- check to see if the chambers can be moved
+
+- Limit movement to just x and y
+- Replace empty null space with a chamber 
+
+- create a pool spawner for the chambers
