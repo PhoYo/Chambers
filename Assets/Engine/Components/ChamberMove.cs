@@ -7,7 +7,18 @@ public class ChamberMove : MonoBehaviour {
 	RaycastHit2D rayHit;
 
 	private Vector2 initPos;
-		
+
+	private enum MovementDir {
+
+		Left,
+		Right,
+		Up,
+		Down
+	}
+	private MovementDir movementDir;
+
+
+
 	// Update is called once per frame
 	void Update () 
 	{
@@ -47,19 +58,58 @@ public class ChamberMove : MonoBehaviour {
 				{
 					// define chamber position
 					Vector2 pos = hit.collider.gameObject.transform.position;
-
 					// round the postion so it is only moves by one unit
 					pos.x = Mathf.Round(mousePos.x);
 					pos.y = Mathf.Round(mousePos.y);
-					// move the chamber with the new round positions
-					hit.collider.gameObject.transform.position = new Vector2( pos.x , pos.y );
 
+
+
+	
 					// determine which direction the chamber is being moved
+					if (pos.x > initPos.x) {
+						movementDir = MovementDir.Right;
+					} else if ( pos.x < initPos.x) {
+						movementDir = MovementDir.Left;
+					} else if (pos.y > initPos.y) {
+						movementDir = MovementDir.Up;
+					} else if (pos.y < initPos.y) {
+						movementDir = MovementDir.Down;
+					}
+
+					//Debug.Log(" chamber Movement Direction : " + movementDir);
+				
+
+
+
+					// find out the distance that the chamber has moved
 					float differencePos = Vector2.Distance (initPos, pos);
 
-					Debug.Log("the difference : " + differencePos);
+
+					// go through all of the chambers in the array
+					for (int x = 0; CreateChamberArray.arraySize < 0; x++)
+					{
+						// work through the whole array
+						for (int y = 0; CreateChamberArray.arraySize < 0; y++)
+						{
+							// move left
+							if (movementDir == MovementDir.Left){
+								//CreateChamberArray.ChamberArray[x,y];
+							} else if (movementDir == MovementDir.Right) {
+
+							} else if (movementDir == MovementDir.Up) {
+
+							} else if (movementDir == MovementDir.Down) {
+
+							}
+						}
+					}
 
 
+
+					// Move all the chambers that are selected
+
+					// move the chamber with the new round position
+					hit.collider.gameObject.transform.position = new Vector2( pos.x , pos.y );
 				}
 				
 			}

@@ -1,13 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Engine\Core\Helpers.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Engine\Components\ChamberMove.cs">
     <Files>
-      <File FileName="Assets\Engine\Components\ChamberMove.cs" Line="39" Column="7" />
-      <File FileName="Assets\Engine\Core\Helpers.cs" Line="31" Column="2" />
-      <File FileName="Assets\Engine\Components\CreateChamberArray.cs" Line="138" Column="38" />
-      <File FileName="Assets\Engine\Core\Level.cs" Line="12" Column="1" />
-      <File FileName="Assets\Engine\Components\lastClickedObject.cs" Line="36" Column="32" />
-      <File FileName="Assets\Engine\Components\EditChambers.cs" Line="9" Column="36" />
+      <File FileName="Assets\Engine\Components\ChamberMove.cs" Line="76" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -9,11 +9,11 @@ using System.Text;
 public class CreateChamberArray : MonoBehaviour {
 
 	public int ChamberSize;
-	public int arraySize;
+	public static int arraySize;
 	public Sprite[] ChamberSprite;
 	public string LevelName;
 
-	private Chamber[,] ChamberArray = new Chamber[8,8];
+	public static Chamber[,] ChamberArray = new Chamber[8,8];
 	private string LevelData;
 
 	private StreamWriter sw;
