@@ -115,8 +115,9 @@ public class CreateChamberArray : MonoBehaviour {
 		GO_level.name = level.Name;
 
 		// 2D array for the chamber location
-		for (int i=0; i<8; i++) {
-			for (int j=0; j<8; j++) {
+		for (int i=0; i<ChamberSize; i++) {
+			for (int j=0; j<ChamberSize; j++) {
+
 
 				//Create chamber
 				Chamber chamber = new Chamber();
