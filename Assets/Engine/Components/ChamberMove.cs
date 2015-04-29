@@ -215,7 +215,7 @@ public class ChamberMove : MonoBehaviour {
 
 					// check if the chamber has been defined to change
 
-					// make the value null
+					// make the value null so it can be edited later
 
 				}
 			}
@@ -231,7 +231,7 @@ public class ChamberMove : MonoBehaviour {
 			// round the positions of the 
 			float PosX  = Mathf.Round(child.position.x);
 			float PosY  = Mathf.Round(child.position.y);
-			// vector 2 for 
+			// vector 2 for each child
 			Vector2 v = new Vector2(PosX,PosY);
 			
 			// make the chamber positon the chamber number in the array
