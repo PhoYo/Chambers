@@ -1,8 +1,8 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Engine\Components\ChamberMove.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\..\Documents\tigi-augmented-reality-android\Assets\scripts\touchToContinue.cs">
     <Files>
-      <File FileName="Assets\Engine\Components\ChamberMove.cs" Line="221" Column="5" />
+      <File FileName="..\..\..\..\Documents\tigi-augmented-reality-android\Assets\scripts\touchToContinue.cs" Line="15" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

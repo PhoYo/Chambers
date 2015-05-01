@@ -5,9 +5,9 @@ public class ChamberMove : MonoBehaviour {
 	
 	Ray2D ray;
 	RaycastHit2D rayHit;
+	
 
-	public Transform LevelObject;
-
+	private Transform LevelObject;
 	private Vector2 initPos;
 	private Vector2 pos;
 
@@ -24,6 +24,17 @@ public class ChamberMove : MonoBehaviour {
 
 
 
+	void Start ()
+	{
+
+
+
+	
+	}
+
+
+
+
 	// Update is called once per frame
 	void Update () 
 	{
@@ -33,6 +44,9 @@ public class ChamberMove : MonoBehaviour {
 		///////////////////////////////////////////////////////////////////////////////////
 		if (Input.GetMouseButtonDown (0)) 
 		{
+
+		
+
 			// get mouse position and 2d raycast hit
 			Vector2 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 			RaycastHit2D hit = Physics2D.Raycast (mousePos, Vector2.zero);
@@ -144,8 +158,15 @@ public class ChamberMove : MonoBehaviour {
 					}
 					// check if the chambers fall inside the bounds defined.
 					// Find the null locations in the chamber array and fill with new chambers
+
+					//UpdateGrid();
+
 				}
 			}
+
+
+
+
 		}
 	
 
@@ -205,21 +226,28 @@ public class ChamberMove : MonoBehaviour {
 	/// <summary>
 	/// Updates the grid.
 	/// </summary>
-	void UpdateGrid (Transform[] changedItems)
+	void UpdateGrid ()
 	{
+
+
+		//LevelObject = GameObject.Find ("Level_01");
+		//Transform LOtrans = LevelObject.transform;
+
+
+
 		// remove all old children from the grid that have changed
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
 				// if the chamber in the array has value (it could be empty....)
-				if (CreateChamberArray.ChamberArray[x,y] != null){
+				CreateChamberArray.ChamberArray[x,y] = null;
 
 					// check if the chamber has been defined to change
 
 					// make the value null so it can be edited later
 
 				}
-			}
 		}
+
 
 
 		// work though all the children of the level gameobject.. 
@@ -243,7 +271,6 @@ public class ChamberMove : MonoBehaviour {
 
 
 		// add the childern to the grid 
-
-
 	}
+
 }
