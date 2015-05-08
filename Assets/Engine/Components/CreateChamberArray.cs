@@ -133,7 +133,7 @@ public class CreateChamberArray : MonoBehaviour {
 				GOBrick.name = "chamber" + "_" + i + "_" + j;
 
 				//set the transform of the chamber class
-				chamber.Object = GOBrick.transform;
+				chamber.Object = GOBrick;
 
 				//set the parent of chamber to the level gameobject
 				GOBrick.transform.parent = GO_level.transform;

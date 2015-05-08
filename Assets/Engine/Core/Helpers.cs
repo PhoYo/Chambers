@@ -26,7 +26,7 @@ public static class Helpers {
 	{
 		foreach (Chamber cham in CreateChamberArray.level.LevelChambers) 
 		{
-			Vector2 chamberPos = new Vector2( Mathf.Round( cham.Object.position.x ), Mathf.Round( cham.Object.position.y) );
+			Vector2 chamberPos = new Vector2( Mathf.Round( cham.Object.transform.position.x ), Mathf.Round( cham.Object.transform.position.y) );
 
 	
 			// is the chamber in the level bounds

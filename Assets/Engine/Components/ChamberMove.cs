@@ -10,6 +10,9 @@ public class ChamberMove : MonoBehaviour {
 	private Transform LevelObject;
 	private Vector2 initPos;
 	private Vector2 pos;
+	private Chamber[] ChambersToMove = new Chamber[8];
+	public Sprite[] ChamberSprite;
+
 
 	private enum MovementDir 
 	{
@@ -21,18 +24,6 @@ public class ChamberMove : MonoBehaviour {
 	}
 
 	private MovementDir movementDir;
-
-
-
-	void Start ()
-	{
-
-
-
-	
-	}
-
-
 
 
 	// Update is called once per frame
@@ -182,15 +173,18 @@ public class ChamberMove : MonoBehaviour {
 	/// <param name="positive">If set to <c>true</c> positive.</param>
 	void moveChambers(MovementDir direction, Vector2 currentChamber, bool positive)
 	{
+
+
+
 		for (int x = 0; x < 8; x++) 
 		{
 			for (int y = 0; y < 8; y++) 
 			{
 				//define the chamber
-				Transform ChambersToMove = CreateChamberArray.ChamberArray[x,y].Object.transform;
+				Chamber Chambers = CreateChamberArray.ChamberArray[x,y];
 
 				// define the direction
-				float changedPos;
+				float changedPos = 0;
 
 				// change the value based on the direction
 				if (direction == MovementDir.Left || direction == MovementDir.Right)
@@ -198,30 +192,111 @@ public class ChamberMove : MonoBehaviour {
 					if (currentChamber.y == y)
 					{
 						if (positive){
-							changedPos = ChambersToMove.position.x - 1;
+
+							//Debug.Log("x : " + x + " y : " + y);
+							//Debug.Log("x : " + (x - 1) + " y : " + y);
+
+							//Chamber newEndChamber = new Chamber();
+							// change the chamber 
+							//CreateChamberArray.ChamberArray[x-1,y] = newEndChamber;
+							//CreateChamberArray.ChamberArray[x-1,y] = Chambers;
+						
+							// change the chamber postion
+							changedPos = Chambers.Object.transform.position.x - 1;
+
 						} else {
-							changedPos = ChambersToMove.position.x + 1;
+
+							// DEFINE A ROW OF CHAMBERS TO MOVE 
+							ChambersToMove[x] = Chambers;
+							// EMPTY THE CHAMBER IN THE 2D ARRAY
+							CreateChamberArray.ChamberArray[x,y] = null;
+
+							//null check (if the chamber is greater than null)
+							if (Chambers != null)
+							{
+								// DEFINE THE MOVEMENT OF THE CHAMBER (one to the right)
+								changedPos = Chambers.Object.transform.position.x + 1;
+								// DELETE CHAMBER ON THE END
+								if (Chambers.Object.transform.position.x == 7)
+								{
+									Debug.Log("Destory Extra");
+									// destroy the gameobject
+									Destroy(Chambers.Object);
+									// remove from chamber array
+									Chambers = null;
+								}
+							} else {
+
+								// IF THE CHAMBER == NULL
+
+
+
+								CreateNewChamber (x,y);
+
+
+							}
+
+
+
+
 						}
 
-						// and move the chambers
-						ChambersToMove.position = new Vector2(changedPos,currentChamber.y);
+
+
+						//null check before moving the objects
+						if (Chambers != null)
+						{
+							// and move the chambers
+							Chambers.Object.transform.position = new Vector2(changedPos,currentChamber.y);
+						}
+
+
 					}
 				} else if (direction == MovementDir.Down || direction == MovementDir.Up){
 					if (currentChamber.x == x)
 					{
 						if (positive){
-							changedPos = ChambersToMove.position.y + 1;
+							changedPos = Chambers.Object.transform.position.y + 1;
+
 						} else {
-							changedPos = ChambersToMove.position.y - 1;
+							changedPos = Chambers.Object.transform.position.y - 1;
+
 						}
 						// and move the chambers
-						ChambersToMove.position = new Vector2(currentChamber.x, changedPos);
+						Chambers.Object.transform.position = new Vector2(currentChamber.x, changedPos);
 					}	
 				}
 			}
 
 		}
-	}
+
+
+			// change the value in the array
+			for (int x = 0; x < 7; x++) 
+			{
+				for (int y = 0; y < 7; y++) 
+				{
+					if (currentChamber.y == y)
+					{
+
+						if (x == 8)
+						{
+
+							//CreateChamberArray.ChamberArray[x +1,y] = new Chamber();
+							CreateChamberArray.ChamberArray[x +1,y] = null;
+					
+						}
+						CreateChamberArray.ChamberArray[x + 1,y] = ChambersToMove[x];
+
+						
+
+					}
+				}
+			}
+
+		}
+
+
 
 	/// <summary>
 	/// Updates the grid.
@@ -234,12 +309,14 @@ public class ChamberMove : MonoBehaviour {
 		//Transform LOtrans = LevelObject.transform;
 
 
+		// isnt it better just to move the chambers rather than remove from the array
+
 
 		// remove all old children from the grid that have changed
 		for (int x = 0; x < 8; x++) {
 			for (int y = 0; y < 8; y++) {
 				// if the chamber in the array has value (it could be empty....)
-				CreateChamberArray.ChamberArray[x,y] = null;
+				CreateChamberArray.ChamberArray[x,y].Object = null;
 
 					// check if the chamber has been defined to change
 
@@ -263,14 +340,63 @@ public class ChamberMove : MonoBehaviour {
 			Vector2 v = new Vector2(PosX,PosY);
 			
 			// make the chamber positon the chamber number in the array
-			CreateChamberArray.ChamberArray[(int)v.x,(int)v.y].Object = child;
+//			chamber newChamber = new Chamber();
+
+
+//			CreateChamberArray.ChamberArray[(int)v.x,(int)v.y].Object.transform = child;
+
 			
 
 		}
 
 
 
+		// remove all the chambers then place them back 
+
+
 		// add the childern to the grid 
+	}
+
+
+
+	void RemoveChambers ()
+	{
+
+
+
+
+
+	}
+
+
+
+	void CreateNewChamber (int x, int y)
+	{
+		//Create chamber
+		Chamber chamber = new Chamber();
+		chamber.Name = "chamber" + "_" + x + "_" + y;
+		chamber.Type = UnityEngine.Random.Range(0,5);
+
+
+		//add it to the array
+		CreateChamberArray.ChamberArray [x, y] = chamber;
+
+		
+		//instantite gameobject loaded from the resources folder, set the sprite and the name
+		GameObject ChamberGO = (GameObject)Instantiate(Resources.Load("Prefab/brick"), new Vector2(x,y),Quaternion.identity);
+		ChamberGO.GetComponent<SpriteRenderer>().sprite = ChamberSprite[chamber.Type];
+		ChamberGO.name = "chamber" + "_" + i + "_" + j;
+		
+		//set the transform of the chamber class
+		chamber.Object = ChamberGO;
+		
+		//set the parent of chamber to the level gameobject
+		//ChamberGO.transform.parent = GO_level.transform;
+		
+		
+		SpriteRenderer spriteRenderer = ChamberGO.GetComponent<SpriteRenderer>();
+		spriteRenderer.sortingLayerName = "Chambers";
+
 	}
 
 }
