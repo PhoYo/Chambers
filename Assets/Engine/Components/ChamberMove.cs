@@ -211,9 +211,20 @@ public class ChamberMove : MonoBehaviour {
 							// EMPTY THE CHAMBER IN THE 2D ARRAY
 							CreateChamberArray.ChamberArray[x,y] = null;
 
+
+							if (Chambers.Object.transform.position.x == 0)
+							{ 
+								
+								
+								CreateNewChamber (x,y);
+								
+							}
+
 							//null check (if the chamber is greater than null)
 							if (Chambers != null)
 							{
+
+
 								// DEFINE THE MOVEMENT OF THE CHAMBER (one to the right)
 								changedPos = Chambers.Object.transform.position.x + 1;
 								// DELETE CHAMBER ON THE END
@@ -227,11 +238,8 @@ public class ChamberMove : MonoBehaviour {
 								}
 							} else {
 
-								// IF THE CHAMBER == NULL
-
-
-
-								CreateNewChamber (x,y);
+								// create the Chamber if the spot = null
+								//CreateNewChamber (x,y);
 
 
 							}
@@ -372,6 +380,8 @@ public class ChamberMove : MonoBehaviour {
 
 	void CreateNewChamber (int x, int y)
 	{
+		Debug.Log ("created chamber at " + x + " , " + y);
+
 		//Create chamber
 		Chamber chamber = new Chamber();
 		chamber.Name = "chamber" + "_" + x + "_" + y;
@@ -385,7 +395,7 @@ public class ChamberMove : MonoBehaviour {
 		//instantite gameobject loaded from the resources folder, set the sprite and the name
 		GameObject ChamberGO = (GameObject)Instantiate(Resources.Load("Prefab/brick"), new Vector2(x,y),Quaternion.identity);
 		ChamberGO.GetComponent<SpriteRenderer>().sprite = ChamberSprite[chamber.Type];
-		ChamberGO.name = "chamber" + "_" + i + "_" + j;
+		ChamberGO.name = "chamber" + "_" + x + "_" + y;
 		
 		//set the transform of the chamber class
 		chamber.Object = ChamberGO;
