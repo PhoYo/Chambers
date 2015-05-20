@@ -36,8 +36,6 @@ public class ChamberMove : MonoBehaviour {
 		if (Input.GetMouseButtonDown (0)) 
 		{
 
-		
-
 			// get mouse position and 2d raycast hit
 			Vector2 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 			RaycastHit2D hit = Physics2D.Raycast (mousePos, Vector2.zero);
@@ -78,7 +76,6 @@ public class ChamberMove : MonoBehaviour {
 					pos.x = Mathf.Round(pos.x);
 					pos.y = Mathf.Round(pos.y);
 
-
 					///////////////
 					// DIRECTION //
 					///////////////
@@ -97,17 +94,7 @@ public class ChamberMove : MonoBehaviour {
 					// find out the distance that the chamber has moved
 					float differencePos = Vector2.Distance (initPos, pos);
 
-			
-
-
-							//}
-						//}
-				//	}
-
-					// move the chamber with the new round position
-					//hit.collider.gameObject.transform.position = new Vector2( pos.x , pos.y );
-				}
-				
+				}	
 			}
 		}
 
@@ -116,7 +103,6 @@ public class ChamberMove : MonoBehaviour {
 		///////////////////////////////////////////////////////////////////////////////////
 		if (Input.GetMouseButtonUp (0)) 
 		{
-
 			// get mouse position and 2d raycast hit
 			Vector2 mousePos = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 			RaycastHit2D hit = Physics2D.Raycast (mousePos, Vector2.zero);
@@ -140,29 +126,15 @@ public class ChamberMove : MonoBehaviour {
 					} else if (movementDir == MovementDir.Up) {
 						Debug.Log("up");
 						//move chambers
-						moveChambers(MovementDir.Up, pos, true);
-						
+						moveChambers(MovementDir.Up, pos, true);	
 					} else if (movementDir == MovementDir.Down) {
 						Debug.Log("down");
 						//move chambers
 						moveChambers(MovementDir.Down, pos, false);
 					}
-					// check if the chambers fall inside the bounds defined.
-					// Find the null locations in the chamber array and fill with new chambers
-
-					//UpdateGrid();
-
 				}
 			}
-
-
-
-
 		}
-	
-
-
-	
 	}
 
 	/// <summary>
@@ -173,9 +145,6 @@ public class ChamberMove : MonoBehaviour {
 	/// <param name="positive">If set to <c>true</c> positive.</param>
 	void moveChambers(MovementDir direction, Vector2 currentChamber, bool positive)
 	{
-
-
-
 		for (int x = 0; x < 8; x++) 
 		{
 			for (int y = 0; y < 8; y++) 
@@ -192,17 +161,32 @@ public class ChamberMove : MonoBehaviour {
 					if (currentChamber.y == y)
 					{
 						if (positive){
+							// DEFINE A ROW OF CHAMBERS TO MOVE 
+							ChambersToMove[x] = Chambers;
+							// EMPTY THE CHAMBER IN THE 2D ARRAY
+							CreateChamberArray.ChamberArray[x,y] = null;
 
-							//Debug.Log("x : " + x + " y : " + y);
-							//Debug.Log("x : " + (x - 1) + " y : " + y);
-
-							//Chamber newEndChamber = new Chamber();
-							// change the chamber 
-							//CreateChamberArray.ChamberArray[x-1,y] = newEndChamber;
-							//CreateChamberArray.ChamberArray[x-1,y] = Chambers;
-						
-							// change the chamber postion
-							changedPos = Chambers.Object.transform.position.x - 1;
+							if (Chambers.Object.transform.position.x == 7)
+							{ 
+								CreateNewChamber (x,y);
+							}
+							
+							//null check
+							if (Chambers != null)
+							{
+								// DEFINE THE MOVEMENT OF THE CHAMBER (one to the right)
+								changedPos = Chambers.Object.transform.position.x - 1;
+								
+								// DELETE CHAMBER ON THE END
+								if (Chambers.Object.transform.position.x == 0)
+								{
+									Debug.Log("Destory Extra");
+									// destroy the gameobject
+									Destroy(Chambers.Object);
+									// remove from chamber array
+									Chambers = null;
+								}
+							} 
 
 						} else {
 
@@ -214,19 +198,15 @@ public class ChamberMove : MonoBehaviour {
 
 							if (Chambers.Object.transform.position.x == 0)
 							{ 
-								
-								
 								CreateNewChamber (x,y);
-								
 							}
 
-							//null check (if the chamber is greater than null)
+							//null check
 							if (Chambers != null)
 							{
-
-
 								// DEFINE THE MOVEMENT OF THE CHAMBER (one to the right)
 								changedPos = Chambers.Object.transform.position.x + 1;
+
 								// DELETE CHAMBER ON THE END
 								if (Chambers.Object.transform.position.x == 7)
 								{
@@ -236,20 +216,8 @@ public class ChamberMove : MonoBehaviour {
 									// remove from chamber array
 									Chambers = null;
 								}
-							} else {
-
-								// create the Chamber if the spot = null
-								//CreateNewChamber (x,y);
-
-
-							}
-
-
-
-
+							} 
 						}
-
-
 
 						//null check before moving the objects
 						if (Chambers != null)
@@ -257,9 +225,8 @@ public class ChamberMove : MonoBehaviour {
 							// and move the chambers
 							Chambers.Object.transform.position = new Vector2(changedPos,currentChamber.y);
 						}
-
-
 					}
+
 				} else if (direction == MovementDir.Down || direction == MovementDir.Up){
 					if (currentChamber.x == x)
 					{
@@ -279,24 +246,39 @@ public class ChamberMove : MonoBehaviour {
 		}
 
 
-			// change the value in the array
+			//	
+			// UPDATE THE MAIN CHAMBER ARRAY //
+			//
 			for (int x = 0; x < 7; x++) 
 			{
 				for (int y = 0; y < 7; y++) 
 				{
 					if (currentChamber.y == y)
 					{
-
-						if (x == 8)
+						//
+						// find the movement direction and move the chamber acordinginly in the main array
+						//
+						if (direction == MovementDir.Right)
 						{
+							CreateChamberArray.ChamberArray[x+1,y] = null;
+							CreateChamberArray.ChamberArray[x+1,y] = ChambersToMove[x];
+						} else if (direction == MovementDir.Left)
+						{
+							Debug.Log(CreateChamberArray.ChamberArray[x-1,y].Name);
 
-							//CreateChamberArray.ChamberArray[x +1,y] = new Chamber();
-							CreateChamberArray.ChamberArray[x +1,y] = null;
-					
+							CreateChamberArray.ChamberArray[x-1,y] = null;
+							CreateChamberArray.ChamberArray[x-1,y] = ChambersToMove[x];
+						} else if (direction == MovementDir.Up)
+						{
+							CreateChamberArray.ChamberArray[x,y+1] = null;
+							CreateChamberArray.ChamberArray[x,y+1] = ChambersToMove[y];
+						} else if (direction == MovementDir.Down)
+						{
+							CreateChamberArray.ChamberArray[x,y-1] = null;
+							CreateChamberArray.ChamberArray[x,y-1] = ChambersToMove[y];
 						}
-						CreateChamberArray.ChamberArray[x + 1,y] = ChambersToMove[x];
 
-						
+						Debug.Log("Main Chamber Array Updated");
 
 					}
 				}
