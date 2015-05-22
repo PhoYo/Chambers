@@ -28,9 +28,6 @@ $RECYCLE.BIN/
 .AppleDouble
 .LSOverride
 
-# Thumbnails
-._*
-
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
@@ -41,3 +38,10 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Unity crap
+/*.csproj
+/*.sln
+/*.userprefs
+/*.unityproj
+/Library
