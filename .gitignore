@@ -42,6 +42,9 @@ Temporary Items
 # Unity crap
 /*.csproj
 /*.sln
+/*.suo
 /*.userprefs
 /*.unityproj
 /Library
+/Temp
+/obj
